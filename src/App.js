@@ -1,25 +1,29 @@
 import React from 'react'
 import { Route } from 'react-router'
+import { Provider} from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Load } from 'components'
+import store from './store'
 
 import * as pages from './pages'
 
-class App extends React.Component {
+export default class App extends React.Component {
   render() {
     return (
-      <Router>
-        <div className="container mt-5 mb-5">
-          {Object.keys(pages).map(k => {
-            const page = pages[k]
-
-            return (
-              <Route key={k} exact={true} path={page.path} component={page} />
-            )
-          })}
-        </div>
-      </Router>
+      <Provider store={store}>
+        <Load>
+          <Router>
+            <div className="container mt-5 mb-5">
+              {Object.keys(pages).map(k => {
+                const page = pages[k]
+                return (
+                  <Route key={k} exact={true} path={page.path} component={page} />
+                )
+              })}
+            </div>
+          </Router>
+        </Load>
+      </Provider>
     )
   }
 }
-
-export default App

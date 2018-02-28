@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Menu } from 'components'
 
 const Description = styled.div`
   margin: 30px;
@@ -8,7 +9,7 @@ const Description = styled.div`
 
 export function Header() {
   return (
-    <div class="text-center">
+    <div className="text-center">
       <h2>i18n Monitor</h2>
       <Description>
         Monitor DHIS2 repos. Language support. Localization efforts. Translation
@@ -16,7 +17,8 @@ export function Header() {
         Check Travis or any build process which needs to include{' '}
         <strong>localize</strong> step before build is performed etc.
       </Description>
-      <hr />
+
+      <Menu />
     </div>
   )
 }

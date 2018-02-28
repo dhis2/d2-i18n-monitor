@@ -1,8 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Header } from 'components'
-
-const Container = styled.div``
+import Template from './Template'
 
 export class Projects extends React.Component {
   static path = '/'
@@ -18,11 +15,9 @@ TODO
 5. Track .travis.yml if locales are part of .travis.yml
 `
     return (
-      <Container>
-        <Header />
-
+      <Template>
         <pre>{todo}</pre>
-      </Container>
+      </Template>
     )
   }
 }
