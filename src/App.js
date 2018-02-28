@@ -13,7 +13,8 @@ export default class App extends React.Component {
       <Provider store={store}>
         <Load>
           <Router>
-            <div className="container mt-5 mb-5">
+            <div className="container mt-3 mb-5">
+              <Route exact={true} path="/" component={pages.Projects} />
               {Object.keys(pages).map(k => {
                 const page = pages[k]
                 return (

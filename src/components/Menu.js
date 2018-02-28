@@ -1,12 +1,14 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 export function Menu() {
   return (
-    <div className="d-flex border-bottom pb-1">
-      <ul className="nav mx-auto">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <Link to="/" className="navbar-brand">i18n Monitor</Link>
+
+      <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <NavLink className="nav-link" activeClassName="active" to="/">
+          <NavLink className="nav-link" activeClassName="active" to="/projects">
             Projects
           </NavLink>
         </li>
@@ -16,6 +18,6 @@ export function Menu() {
           </NavLink>
         </li>
       </ul>
-    </div>
+    </nav>
   )
 }
