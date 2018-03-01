@@ -1,7 +1,10 @@
+import { REHYDRATE } from 'redux-persist'
 import { CONFIG_SET, CONFIG_RESET } from './actions'
 
 const initialState = {
-  accessToken: undefined
+  accessToken: '',
+  organizations: 'dhis2',
+  skipRepos: ''
 }
 
 export default function configReducer(state = initialState, action) {
@@ -11,6 +14,11 @@ export default function configReducer(state = initialState, action) {
     return { ...state, ...payload }
   } else if (type === CONFIG_RESET) {
     return { ...initialState }
+  } else if (payload && type === REHYDRATE) {
+    return {
+      ...initialState,
+      ...payload.config
+    }
   }
 
   return state

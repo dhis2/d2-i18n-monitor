@@ -7,7 +7,7 @@ const Container = styled.div``
 export default class Template extends React.Component {
   render() {
     return (
-      <Container>
+      <Container className="d-flex flex-column">
         <Header />
         {this.props.children}
       </Container>
