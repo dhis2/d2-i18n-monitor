@@ -8,22 +8,22 @@ const Description = styled.div`
   text-align: left;
 `
 
-const Tag = ({ text }) => (
+const Topic = ({ text }) => (
   <span className="badge badge-pill badge-primary">{text}</span>
 )
 
-const TagDescription = styled.span`
+const TopicDescription = styled.span`
   margin-left: 10px;
 `
 
-const ValidTag = ({ text, description }) => (
+const ValidTopic = ({ text, description }) => (
   <div>
-    <Tag text={text} />
-    <TagDescription>{description}</TagDescription>
+    <Topic text={text} />
+    <TopicDescription>{description}</TopicDescription>
   </div>
 )
 
-const tags = [
+const topics = [
   {
     name: 'd2-i18next',
     description: 'd2-i18next library has been integrated'
@@ -43,15 +43,19 @@ export function Header() {
           <strong>localize</strong> step before build is performed etc.
         </p>
         <p>
-          Use Github tags to inform this service if a certain functionality has
-          been implemented. Example. attach tag <Tag text="d2-i18next" /> to a
-          repository. It will signal that i18next support has been implemented
+          Use GitHub Topic to inform this service if a certain functionality has
+          been implemented. Example. attach topic <Topic text="d2-i18next" /> to
+          a repository. It will signal that i18next support has been implemented
           in the repo.
         </p>
 
         <div className="mt-3">
-          {tags.map(t => (
-            <ValidTag key={t.name} text={t.name} description={t.description} />
+          {topics.map(t => (
+            <ValidTopic
+              key={t.name}
+              text={t.name}
+              description={t.description}
+            />
           ))}
         </div>
       </Description>

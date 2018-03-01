@@ -10,23 +10,23 @@ class ConfigPage extends React.Component {
   state = {
     showSnackBar: false,
     accessToken: '',
-    organizations: '',
+    orgs: '',
     skipRepos: ''
   }
 
   componentDidMount() {
-    const { accessToken, organizations, skipRepos } = this.props.config
-    this.setState({ accessToken, organizations, skipRepos })
+    const { accessToken, orgs, skipRepos } = this.props.config
+    this.setState({ accessToken, orgs, skipRepos })
   }
 
   componentWillReceiveProps(newProps) {
-    const { accessToken, organizations, skipRepos } = newProps.config
-    this.setState({ accessToken, organizations, skipRepos })
+    const { accessToken, orgs, skipRepos } = newProps.config
+    this.setState({ accessToken, orgs, skipRepos })
   }
 
   onSave = () => {
-    const { accessToken, organizations, skipRepos } = this.state
-    this.props.setConfig({ accessToken, organizations, skipRepos })
+    const { accessToken, orgs, skipRepos } = this.state
+    this.props.setConfig({ accessToken, orgs, skipRepos })
     this.setState({ showSnackBar: true })
   }
 
@@ -45,7 +45,7 @@ class ConfigPage extends React.Component {
             >
               instructions here to generate
             </a>{' '}
-            your Github personal access token. Grant all permissions under{' '}
+            your GitHub personal access token. Grant all permissions under{' '}
             <strong>repo</strong>. We will store it as part of browser storage.
           </p>
           <TextField
@@ -57,10 +57,10 @@ class ConfigPage extends React.Component {
           />
 
           <p className="mt-5">
-            List of Github organizations to monitor. One per line. Leave to
+            List of GitHub organizations to monitor. One per line. Leave to
             monitor all organizations. If you enter e.g. <strong>dhis2</strong>{' '}
             you will only monitor repositories related to dhis2 organization
-            that you are part of in Github.
+            that you are part of in GitHub.
           </p>
 
           <TextField
@@ -68,8 +68,8 @@ class ConfigPage extends React.Component {
             fullWidth={true}
             multiline
             rows="5"
-            value={this.state.organizations}
-            onChange={this.onChange('organizations')}
+            value={this.state.orgs}
+            onChange={this.onChange('orgs')}
             helperText="GitHub Organizations"
           />
 

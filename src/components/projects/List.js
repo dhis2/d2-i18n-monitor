@@ -35,15 +35,11 @@ class ProjectList extends React.Component {
   async fetchRepos() {
     this.setState({ loading: true })
     try {
-      const { data } = await api()
-        .getUser()
-        .listRepos()
-
-      const { organizations, skipRepos } = this.props.config
-      console.log(data)
+      const repos = await api.repos()
+      const { orgs, skipRepos } = this.props.config
       this.setState({
-        loading: false,
-        repos: filterRepos(data, organizations, skipRepos)
+        repos: filterRepos(repos, orgs, skipRepos),
+        loading: false
       })
     } catch (e) {
       console.log(e)
