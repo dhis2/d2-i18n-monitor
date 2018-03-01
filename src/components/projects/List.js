@@ -51,7 +51,7 @@ class ProjectList extends React.Component {
     if (loading) {
       return (
         <div className="mt-5 text-center">
-          <CircularProgress size={100} thickness={1} />
+          <CircularProgress size={100} thickness={2} />
         </div>
       )
     }

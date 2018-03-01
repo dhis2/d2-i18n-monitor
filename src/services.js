@@ -2,7 +2,7 @@ import axios from 'axios'
 
 axios.defaults.baseURL = 'https://api.github.com/'
 
-const VERSION = 'mercy-preview+json'
+const VERSION = 'mercy-preview'
 
 class API {
   setAccessToken(token) {

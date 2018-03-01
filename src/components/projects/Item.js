@@ -11,7 +11,9 @@ const Description = styled.div`
   font-size: 14px;
 `
 
-export default function Item({ name, description, html_url }) {
+const Icon = ({ name }) => <span className={`fas fa-2x fa-${name}`} />
+
+export default function Item({ name, description, html_url, topics }) {
   return (
     <tr>
       <td>
@@ -20,7 +22,9 @@ export default function Item({ name, description, html_url }) {
         </RepoLink>
         {description && <Description>{description}</Description>}
       </td>
-      <td />
+      <td className="text-right align-middle">
+        {topics.includes('d2-i18n') && <Icon name="language" />}
+      </td>
     </tr>
   )
 }
