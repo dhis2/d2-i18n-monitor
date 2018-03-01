@@ -6,8 +6,9 @@ import rootReducer from './reducers'
 export * from './reducers/config/actions'
 
 const persistConfig = {
-  key: 'd2-i18n-monitor',
-  storage
+  storage,
+  blacklist: ['projects'],
+  key: 'd2-i18n-monitor'
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

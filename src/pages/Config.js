@@ -39,6 +39,7 @@ class ConfigPage extends React.Component {
           <p>
             Please follow{' '}
             <a
+              rel="noopener noreferrer"
               href="https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/"
               target="_blank"
             >

@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Template from './Template'
-
 import { ProjectList } from 'components'
+import Template from './Template'
 
 class ProjectsPage extends React.Component {
   componentDidMount() {
@@ -20,13 +19,17 @@ class ProjectsPage extends React.Component {
   }
 
   render() {
+    if (!this.props.config.accessToken) {
+      return null
+    }
+
     const todo = `
 TODO
 
-1. Define Github API Token to query Github for all the repo information.
-2. Track en.pot file and detect language support.
-3. Track health of a language how well supported a language is against en.pot
-4. Track .travis.yml if locales are part of .travis.yml
+- Detect language support
+- Track en.pot file and detect language support.
+- Track health of a language how well supported a language is against en.pot
+- Track .travis.yml if locales are part of .travis.yml
 `
     return (
       <Template>

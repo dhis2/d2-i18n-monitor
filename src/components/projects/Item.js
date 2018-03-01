@@ -1,16 +1,24 @@
 import React from 'react'
+import styled from 'styled-components'
 
-export default function Item(props) {
-  const { label, git } = props
+const RepoLink = styled.a`
+  font-size: 18px;
+`
+
+const Description = styled.div`
+  margin-bottom: 0;
+  font-style: italic;
+  font-size: 14px;
+`
+
+export default function Item({ name, description, html_url }) {
   return (
     <tr>
       <td>
-        <a
-          href={`https://github.com/${git.id}/tree/${git.branch}`}
-          target="_blank"
-        >
-          {label}
-        </a>
+        <RepoLink href={html_url} rel="noopener noreferrer" target="_blank">
+          {name}
+        </RepoLink>
+        {description && <Description>{description}</Description>}
       </td>
       <td />
     </tr>
