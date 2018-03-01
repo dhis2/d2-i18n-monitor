@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Item from './Item'
-import Details from './Details'
 
 class ProjectList extends React.Component {
   render() {
@@ -9,8 +8,8 @@ class ProjectList extends React.Component {
     return (
       <table className="table mt-5 border-top-0">
         <colgroup>
-          <col width="40%"/>
-          <col width="60%"/>
+          <col width="40%" />
+          <col width="60%" />
         </colgroup>
         <thead>
           <tr>

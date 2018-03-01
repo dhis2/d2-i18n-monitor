@@ -7,5 +7,5 @@ export * from 'reducers/config/actions'
 
 export default combineReducers({
   config,
-  projects,
+  projects
 })

@@ -1,9 +1,10 @@
 import React from 'react'
 import { Route } from 'react-router'
-import { Provider} from 'react-redux'
+import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { Load } from 'components'
-import store from './store'
+import { PersistGate } from 'redux-persist/integration/react'
+import { CircularProgress } from 'material-ui'
+import { store, persistor } from './store'
 
 import * as pages from './pages'
 
@@ -11,19 +12,27 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Load>
+        <PersistGate
+          loading={<CircularProgress size={80} thickness={1} />}
+          persistor={persistor}
+        >
           <Router>
             <div className="container mt-3 mb-5">
-              <Route exact={true} path="/" component={pages.Projects} />
+              <Route exact={true} path="/" component={pages.ProjectsPage} />
               {Object.keys(pages).map(k => {
                 const page = pages[k]
                 return (
-                  <Route key={k} exact={true} path={page.path} component={page} />
+                  <Route
+                    key={k}
+                    exact={true}
+                    path={page.path}
+                    component={page}
+                  />
                 )
               })}
             </div>
           </Router>
-        </Load>
+        </PersistGate>
       </Provider>
     )
   }

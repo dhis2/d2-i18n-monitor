@@ -4,7 +4,9 @@ import { Link, NavLink } from 'react-router-dom'
 export function Menu() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link to="/" className="navbar-brand">i18n Monitor</Link>
+      <Link to="/" className="navbar-brand">
+        i18n Monitor
+      </Link>
 
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">

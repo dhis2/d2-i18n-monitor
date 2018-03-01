@@ -12,7 +12,7 @@ export default function Item(props) {
           {label}
         </a>
       </td>
-      <td></td>
+      <td />
     </tr>
   )
 }

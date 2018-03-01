@@ -1,7 +1,7 @@
 import { CONFIG_SET, CONFIG_RESET } from './actions'
 
 const initialState = {
-  loaded: false
+  accessToken: undefined
 }
 
 export default function configReducer(state = initialState, action) {

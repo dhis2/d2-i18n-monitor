@@ -1,14 +1,10 @@
 import React from 'react'
 import Template from './Template'
 
-export class Config extends React.Component {
+export class ConfigPage extends React.Component {
   static path = '/config'
 
   render() {
-    return (
-      <Template>
-        config
-      </Template>
-    )
+    return <Template>config</Template>
   }
 }

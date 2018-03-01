@@ -1,10 +1,23 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Template from './Template'
 
 import { ProjectList } from 'components'
 
-export class Projects extends React.Component {
-  static path = '/projects'
+class ProjectsPage extends React.Component {
+  componentDidMount() {
+    this.redirectIfNoAccessToken(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.redirectIfNoAccessToken(nextProps)
+  }
+
+  redirectIfNoAccessToken({ config: { accessToken } }) {
+    if (!accessToken) {
+      this.props.history.push('/config')
+    }
+  }
 
   render() {
     const todo = `
@@ -23,3 +36,8 @@ TODO
     )
   }
 }
+
+ProjectsPage = connect(({ config }) => ({ config }), null)(ProjectsPage)
+ProjectsPage.path = '/projects'
+
+export { ProjectsPage }
