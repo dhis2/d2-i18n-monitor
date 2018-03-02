@@ -1,9 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-
-const RepoLink = styled.a`
-  font-size: 18px;
-`
 
 const Description = styled.div`
   margin-bottom: 0;
@@ -11,19 +8,30 @@ const Description = styled.div`
   font-size: 14px;
 `
 
-const Icon = ({ name }) => <span className={`fas fa-2x fa-${name}`} />
+const IconContainer = styled.span`
+  margin-left: 15px;
+`
 
-export default function Item({ name, description, html_url, topics }) {
+const Icon = ({ name }) => <IconContainer className={`fa fa-${name}`} />
+
+export default function Item({
+  full_name,
+  name,
+  description,
+  html_url,
+  topics
+}) {
   return (
     <tr>
       <td>
-        <RepoLink href={html_url} rel="noopener noreferrer" target="_blank">
-          {name}
-        </RepoLink>
+        <Link to={`/project/${full_name}`}>{name}</Link>
         {description && <Description>{description}</Description>}
       </td>
       <td className="text-right align-middle">
         {topics.includes('d2-i18n') && <Icon name="language" />}
+        <a href={html_url} target="_blank" rel="noopener noreferrer">
+          <Icon name="external-link" />
+        </a>
       </td>
     </tr>
   )

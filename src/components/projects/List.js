@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { CircularProgress } from 'material-ui'
+import API from 'api'
+import { base64Decode } from 'helpers'
 import Item from './Item'
-import { api } from 'services'
 
 const FRONTEND_APPS_POSTFIX = '-app'
 
@@ -35,7 +36,7 @@ class ProjectList extends React.Component {
   async fetchRepos() {
     this.setState({ loading: true })
     try {
-      const repos = await api.repos()
+      const repos = await API.repos()
       const { orgs, skipRepos } = this.props.config
       this.setState({
         repos: filterRepos(repos, orgs, skipRepos),
@@ -58,7 +59,7 @@ class ProjectList extends React.Component {
 
     const list = repos.sort((a, b) => a.name.localeCompare(b.name))
     return (
-      <table className="table mt-3 border-top-0">
+      <table className="table table-hover mt-3 border-top-0">
         <colgroup>
           <col width="60%" />
           <col width="40%" />

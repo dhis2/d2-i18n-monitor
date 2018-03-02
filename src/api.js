@@ -24,6 +24,8 @@ class API {
     })
   }
 
+  repo = (owner, repo) => this.request(`/repos/${owner}/${repo}`)
+
   repos = () => {
     let list = []
     return new Promise(async (resolve, reject) => {
@@ -38,6 +40,16 @@ class API {
       resolve(list)
     })
   }
+
+  contents = (owner, repo, path, ref = 'master') => {
+    const url = `/repos/${owner}/${repo}/contents/${path}?ref=${ref}`
+    return axios.request({
+      url,
+      method: 'GET',
+      headers: this.headers()
+    })
+  }
 }
 
 export const api = new API()
+export default api
