@@ -4,6 +4,7 @@ import { CircularProgress } from 'material-ui'
 import styled from 'styled-components'
 import API from 'api'
 import Page from './Page'
+import { Files } from './Files'
 import Template from './Template'
 import { base64Decode } from 'helpers'
 
@@ -43,7 +44,7 @@ const flagImgs = {
   no: nbFlag,
   pt: ptFlag,
   sa: saFlag,
-  ur: pkFlag
+  ur: pkFlag,
 }
 
 const Flag = styled.img`
@@ -56,37 +57,42 @@ function Flags({ list }) {
   })
 }
 
+const paths = ['.travis.yml', 'i18n/en.pot']
+
 class ProjectPage extends Page {
   state = {
     loading: true,
-    repo: null
+    repo: null,
+    selectedFile: 'i18n/en.pot',
   }
 
   async componentDidMount() {
     try {
       const { owner, repo } = this.props.match.params
-      const { data } = await API.repo(owner, repo)
-      console.log('data')
-      console.log(data)
+      const { data: repoJSON } = await API.repo(owner, repo)
 
-      const { data: { content: enPot } } = await API.contents(
-        owner,
-        repo,
-        'i18n/en.pot',
-        'dhis2-i18n-extract'
+      const results = await Promise.all(
+        paths.map(path =>
+          API.contents(owner, repo, path, 'dhis2-i18n-extract'),
+        ),
+      )
+
+      const files = {}
+      results.forEach(
+        ({ data: { path, content } }) => (files[path] = base64Decode(content)),
       )
 
       this.setState({
+        files,
         loading: false,
-        repo: data,
-        files: {
-          'en.pot': base64Decode(enPot)
-        }
+        repo: repoJSON,
       })
     } catch (e) {
       console.log(e)
     }
   }
+
+  onClick = selectedFile => this.setState({ selectedFile })
 
   render() {
     if (this.state.loading) {
@@ -97,7 +103,8 @@ class ProjectPage extends Page {
       )
     }
 
-    const { repo, files } = this.state
+    const { repo, files, selectedFile } = this.state
+    const langs = repo.topics.filter(i => i.startsWith('lang-'))
     return (
       <Template>
         <div className="mt-5">
@@ -106,11 +113,18 @@ class ProjectPage extends Page {
 
           <div className="mt-2">
             <Topics list={repo.topics} />
-            <Flags list={repo.topics.filter(i => i.startsWith('lang-'))} />
+            <Flags list={langs} />
           </div>
 
           <div className="mt-3">
-            <pre>{files['en.pot']}</pre>
+            <Files
+              list={files}
+              selected={selectedFile}
+              onClick={this.onClick}
+            />
+            <pre>
+              <code className="css">{files['en.pot']}</code>
+            </pre>
           </div>
         </div>
       </Template>
