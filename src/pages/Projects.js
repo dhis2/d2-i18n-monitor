@@ -34,13 +34,6 @@ const topics = [
 
 class ProjectsPage extends Page {
   render() {
-    const todo = `
-TODO
-
-- Track en.pot file and detect language support.
-- Track health of a language how well supported a language is against en.pot
-- Track .travis.yml if locales are part of .travis.yml
-`
     return (
       <Template>
         <div>
@@ -69,7 +62,6 @@ TODO
           </div>
         </div>
         <ProjectList />
-        <pre>{todo}</pre>
       </Template>
     )
   }
