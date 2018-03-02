@@ -1,23 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { ProjectList } from 'components'
+import Page from './Page'
 import Template from './Template'
 
-class ProjectsPage extends React.Component {
-  componentDidMount() {
-    this.redirectIfNoAccessToken(this.props)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.redirectIfNoAccessToken(nextProps)
-  }
-
-  redirectIfNoAccessToken({ config: { accessToken } }) {
-    if (!accessToken) {
-      this.props.history.push('/config')
-    }
-  }
-
+class ProjectsPage extends Page {
   render() {
     if (!this.props.config.accessToken) {
       return null
@@ -26,7 +13,6 @@ class ProjectsPage extends React.Component {
     const todo = `
 TODO
 
-- Detect language support
 - Track en.pot file and detect language support.
 - Track health of a language how well supported a language is against en.pot
 - Track .travis.yml if locales are part of .travis.yml

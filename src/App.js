@@ -16,7 +16,11 @@ export default class App extends React.Component {
           loading={<CircularProgress size={80} thickness={1} />}
           persistor={persistor}
         >
-          <Router>
+          <Router
+            basename={
+              process.env.NODE_ENV === 'development' ? '' : '/d2-i18n-monitor'
+            }
+          >
             <div className="container mt-3 mb-5">
               <Route exact={true} path="/" component={pages.ProjectsPage} />
               {Object.keys(pages).map(k => {
