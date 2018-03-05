@@ -23,6 +23,9 @@ const Skull = Emoji.extend`
 const MsgLabel = styled.div`
   font-size: 14px;
 `
+const MsgValue = styled.div`
+  font-size: 14px;
+`
 
 export class Stats extends React.Component {
   view() {
@@ -37,7 +40,7 @@ export class Stats extends React.Component {
         messages.push({
           type: 'primary',
           label: 'Num. of messages',
-          value: msgCount
+          value: <MsgValue>{msgCount}</MsgValue>
         })
       } else if (path.endsWith('.po')) {
         const { enPOT } = this.props
@@ -47,12 +50,12 @@ export class Stats extends React.Component {
         messages.push({
           type: 'primary',
           label: 'Total',
-          value: enMsgCount
+          value: <MsgValue>{enMsgCount}</MsgValue>
         })
         messages.push({
           type: msgCount < enMsgCount ? 'warning' : 'secondary',
           label: 'Translated',
-          value: msgCount === 0 ? <Skull /> : msgCount
+          value: msgCount === 0 ? <Skull /> : <MsgValue>{msgCount}</MsgValue>
         })
 
         let health = msgCount === 0 ? 0 : Math.toFixed(msgCount / enMsgCount, 0)
@@ -60,7 +63,7 @@ export class Stats extends React.Component {
           type:
             health === 0 ? 'danger' : health === 100 ? 'success' : 'warning',
           label: 'Health',
-          value: health === 0 ? <Skull /> : health
+          value: health === 0 ? <Skull /> : <MsgValue>{health}</MsgValue>
         })
       }
     } else if (path.endsWith('package.json')) {
@@ -95,6 +98,20 @@ export class Stats extends React.Component {
       messages.push({
         type: buildExists ? 'success' : 'danger',
         label: 'build',
+        value: buildExists ? <Checkmark /> : <Skull />
+      })
+    } else if (path.endsWith('.travis.yml')) {
+      const lintExists = content.includes('- yarn lint')
+      const buildExists = content.includes('- yarn build')
+
+      messages.push({
+        type: lintExists ? 'success' : 'danger',
+        label: 'yarn lint',
+        value: lintExists ? <Checkmark /> : <Skull />
+      })
+      messages.push({
+        type: buildExists ? 'success' : 'danger',
+        label: 'yarn build',
         value: buildExists ? <Checkmark /> : <Skull />
       })
     }
