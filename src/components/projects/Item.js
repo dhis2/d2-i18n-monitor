@@ -10,7 +10,13 @@ const Description = styled.div`
 
 const IconContainer = styled.span`
   margin-left: 15px;
+
+  &::before {
+    color: #000;
+  }
 `
+
+const Title = styled.div``
 
 const Icon = ({ name }) => <IconContainer className={`fa fa-${name}`} />
 
@@ -24,7 +30,11 @@ export default function Item({
   return (
     <tr>
       <td>
-        <Link to={`/project/${full_name}`}>{name}</Link>
+        {topics.includes('d2-i18n') ? (
+          <Link to={`/project/${full_name}`}>{name}</Link>
+        ) : (
+          <Title>{name}</Title>
+        )}
         {description && <Description>{description}</Description>}
       </td>
       <td className="text-right align-middle">
