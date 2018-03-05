@@ -57,15 +57,16 @@ export class Files extends React.Component {
       po: 'lsl'
     }
 
+    const content = list[selected]
     return (
       <div>
         <Tabs selected={selected} list={sorted} onClick={this.props.onClick} />
         <Stats
           path={selected}
-          content={list[selected]}
+          content={content}
           enPOT={selected.endsWith('.po') ? list['i18n/en.pot'] : ''}
         />
-        <Highlight lang={ext2Lang[ext]}>{list[selected]}</Highlight>
+        {content && <Highlight lang={ext2Lang[ext]}>{content}</Highlight>}
       </div>
     )
   }
