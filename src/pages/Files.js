@@ -53,8 +53,8 @@ export class Files extends React.Component {
     const ext2Lang = {
       yml: 'yaml',
       json: 'json',
-      pot: 'ini',
-      po: 'ini'
+      pot: 'lsl',
+      po: 'lsl'
     }
 
     return (
