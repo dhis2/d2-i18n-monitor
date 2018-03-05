@@ -71,7 +71,7 @@ class ProjectPage extends Page {
       const { data: repoJSON } = await API.repo(owner, repo)
 
       const langFiles = []
-      repoJSON.topics.map(t => {
+      repoJSON.topics.forEach(t => {
         if (t.startsWith('lang-') && t !== 'lang-en') {
           langFiles.push('i18n/' + t.substr(t.indexOf('-') + 1) + '.po')
         }
