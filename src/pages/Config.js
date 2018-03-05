@@ -11,7 +11,7 @@ class ConfigPage extends React.Component {
     showSnackBar: false,
     accessToken: '',
     orgs: '',
-    skipRepos: '',
+    skipRepos: ''
   }
 
   componentDidMount() {

@@ -6,7 +6,6 @@ import API from 'api'
 import Page from './Page'
 import { Files } from './Files'
 import Template from './Template'
-import { base64Decode } from 'helpers'
 
 import bdFlag from 'assets/images/flags/bd.png'
 import esFlag from 'assets/images/flags/es.png'
@@ -44,7 +43,7 @@ const flagImgs = {
   no: nbFlag,
   pt: ptFlag,
   sa: saFlag,
-  ur: pkFlag,
+  ur: pkFlag
 }
 
 const Flag = styled.img`
@@ -57,13 +56,13 @@ function Flags({ list }) {
   })
 }
 
-const paths = ['.travis.yml', 'i18n/en.pot']
+const paths = ['.travis.yml', 'package.json', 'i18n/en.pot']
 
 class ProjectPage extends Page {
   state = {
     loading: true,
     repo: null,
-    selectedFile: 'i18n/en.pot',
+    selectedFile: 'i18n/en.pot'
   }
 
   async componentDidMount() {
@@ -71,23 +70,41 @@ class ProjectPage extends Page {
       const { owner, repo } = this.props.match.params
       const { data: repoJSON } = await API.repo(owner, repo)
 
+      const langFiles = []
+      repoJSON.topics.map(t => {
+        if (t.startsWith('lang-') && t !== 'lang-en') {
+          langFiles.push('i18n/' + t.substr(t.indexOf('-') + 1) + '.po')
+        }
+      })
+
+      const filePaths = paths.slice(0).concat(langFiles)
       const results = await Promise.all(
-        paths.map(path =>
-          API.contents(owner, repo, path, 'dhis2-i18n-extract'),
-        ),
+        filePaths.map(path =>
+          API.contents(owner, repo, path, 'dhis2-i18n-extract')
+        )
       )
 
       const files = {}
-      results.forEach(
-        ({ data: { path, content } }) => (files[path] = base64Decode(content)),
-      )
+      results.forEach(({ path, found, content }) => {
+        if (!found) {
+          if (!path.endsWith('.po')) {
+            return
+          }
+
+          // enables, non-existing language files to be created in Future functionality
+          content = ''
+        }
+
+        files[path] = content
+      })
 
       this.setState({
         files,
         loading: false,
-        repo: repoJSON,
+        repo: repoJSON
       })
     } catch (e) {
+      console.log('exception')
       console.log(e)
     }
   }
@@ -104,7 +121,7 @@ class ProjectPage extends Page {
     }
 
     const { repo, files, selectedFile } = this.state
-    const langs = repo.topics.filter(i => i.startsWith('lang-'))
+    const languages = repo.topics.filter(i => i.startsWith('lang-'))
     return (
       <Template>
         <div className="mt-5">
@@ -113,7 +130,7 @@ class ProjectPage extends Page {
 
           <div className="mt-2">
             <Topics list={repo.topics} />
-            <Flags list={langs} />
+            <Flags list={languages} />
           </div>
 
           <div className="mt-3">
@@ -122,9 +139,6 @@ class ProjectPage extends Page {
               selected={selectedFile}
               onClick={this.onClick}
             />
-            <pre>
-              <code className="css">{files['en.pot']}</code>
-            </pre>
           </div>
         </div>
       </Template>

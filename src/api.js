@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { base64Decode } from './helpers'
 
 axios.defaults.baseURL = 'https://api.github.com/'
 
@@ -41,12 +42,29 @@ class API {
     })
   }
 
-  contents = (owner, repo, path, ref = 'master') => {
-    const url = `/repos/${owner}/${repo}/contents/${path}?ref=${ref}`
-    return axios.request({
-      url,
-      method: 'GET',
-      headers: this.headers()
+  contents(owner, repo, path, ref = 'master') {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const url = `/repos/${owner}/${repo}/contents/${path}?ref=${ref}`
+        const res = await axios.request({
+          url,
+          method: 'GET',
+          headers: this.headers()
+        })
+
+        const { data: { content } } = res
+        resolve({
+          path,
+          found: true,
+          content: base64Decode(content)
+        })
+      } catch (e) {
+        resolve({
+          path,
+          found: false,
+          content: null
+        })
+      }
     })
   }
 }

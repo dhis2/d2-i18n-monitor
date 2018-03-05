@@ -9,6 +9,7 @@ const TabsContainer = styled.div`
 `
 
 const Tab = styled.div`
+  user-select: none;
   cursor: pointer;
   color: ${p => (p.selected ? '#fff' : '#000')};
   background-color: ${p => (p.selected ? '#0070ff' : '#f7f8f9')};
@@ -49,13 +50,14 @@ class Tabs extends React.Component {
 export class Files extends React.Component {
   render() {
     const { selected, list } = this.props
+    const sorted = Object.keys(list).sort((a, b) =>
+      a
+        .slice(a.lastIndexOf('.') + 1)
+        .localeCompare(b.slice(b.lastIndexOf('.') + 1))
+    )
     return (
       <div>
-        <Tabs
-          selected={selected}
-          list={Object.keys(list).sort()}
-          onClick={this.props.onClick}
-        />
+        <Tabs selected={selected} list={sorted} onClick={this.props.onClick} />
         <Content>{list[selected]}</Content>
       </div>
     )
