@@ -25,7 +25,7 @@ function filterRepos(list, orgs, skipRepos) {
 class ProjectList extends React.Component {
   state = {
     loading: false,
-    repos: [],
+    repos: []
   }
 
   componentDidMount() {
@@ -39,7 +39,7 @@ class ProjectList extends React.Component {
       const { orgs, skipRepos } = this.props.config
       this.setState({
         repos: filterRepos(repos, orgs, skipRepos),
-        loading: false,
+        loading: false
       })
     } catch (e) {
       console.log(e)
@@ -76,6 +76,6 @@ class ProjectList extends React.Component {
 }
 
 ProjectList = connect(({ config, projects }) => ({ config, projects }), null)(
-  ProjectList,
+  ProjectList
 )
 export { ProjectList }

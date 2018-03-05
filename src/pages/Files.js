@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Highlight, Stats } from 'components'
 
 const TabsContainer = styled.div`
   display: flex;
@@ -19,14 +20,6 @@ const Tab = styled.div`
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
 `
-
-const Code = styled.pre`
-  background-color: #f7f8f9;
-  padding: 20px;
-  font-size: 12px;
-`
-
-const Content = ({ children }) => <Code>{children}</Code>
 
 class Tabs extends React.Component {
   render() {
@@ -55,10 +48,20 @@ export class Files extends React.Component {
         .slice(a.lastIndexOf('.') + 1)
         .localeCompare(b.slice(b.lastIndexOf('.') + 1))
     )
+
+    const ext = selected.substr(selected.lastIndexOf('.') + 1)
+    const ext2Lang = {
+      yml: 'yaml',
+      json: 'json',
+      pot: 'ini',
+      po: 'ini'
+    }
+
     return (
       <div>
         <Tabs selected={selected} list={sorted} onClick={this.props.onClick} />
-        <Content>{list[selected]}</Content>
+        <Stats path={selected} content={list[selected]} />
+        <Highlight lang={ext2Lang[ext]}>{list[selected]}</Highlight>
       </div>
     )
   }

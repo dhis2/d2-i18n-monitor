@@ -62,7 +62,8 @@ class ProjectPage extends Page {
   state = {
     loading: true,
     repo: null,
-    selectedFile: 'i18n/en.pot'
+    selectedFile: 'package.json'
+    // selectedFile: 'i18n/en.pot'
   }
 
   async componentDidMount() {
