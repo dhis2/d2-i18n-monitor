@@ -1,12 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Highlight, Stats } from 'components'
+import { Highlight, Stats, POEditor } from 'components'
 
 const TabsContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  margin: 40px 0 10px 0;
 `
 
 const Tab = styled.div`
@@ -40,7 +39,53 @@ class Tabs extends React.Component {
   }
 }
 
+const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 40px 0 10px 0;
+`
+
+const EditMode = styled.div.attrs({
+  className: 'fa fa-pencil-square-o'
+})`
+  cursor: pointer;
+  margin-right: 15px;
+  padding: 0 10px;
+  height: 26px;
+  line-height: 26px;
+  color: ${p => (p.enabled ? '#fff' : '#000')};
+  background-color: ${p => (p.enabled ? 'rgba(0,0,0,.7)' : '#f7f8f9')};
+`
+
 export class Files extends React.Component {
+  contentView() {
+    const { selected, list, editMode } = this.props
+    const ext = selected.substr(selected.lastIndexOf('.') + 1)
+    const ext2Lang = {
+      yml: 'yaml',
+      json: 'json',
+      pot: 'lsl',
+      po: 'lsl'
+    }
+    const content = list[selected]
+
+    if (editMode && selected.endsWith('.po')) {
+      return (
+        <POEditor
+          path={selected}
+          content={content}
+          potContent={list['i18n/en.pot']}
+        />
+      )
+    }
+
+    if (!content) {
+      return null
+    }
+
+    return <Highlight lang={ext2Lang[ext]}>{content}</Highlight>
+  }
   render() {
     const { selected, list } = this.props
     const sorted = Object.keys(list).sort((a, b) =>
@@ -49,24 +94,24 @@ export class Files extends React.Component {
         .localeCompare(b.slice(b.lastIndexOf('.') + 1))
     )
 
-    const ext = selected.substr(selected.lastIndexOf('.') + 1)
-    const ext2Lang = {
-      yml: 'yaml',
-      json: 'json',
-      pot: 'lsl',
-      po: 'lsl'
-    }
-
+    const { editMode } = this.props
     const content = list[selected]
     return (
       <div>
-        <Tabs selected={selected} list={sorted} onClick={this.props.onClick} />
+        <Header>
+          <EditMode enabled={editMode} onClick={this.props.onToggleMode} />
+          <Tabs
+            selected={selected}
+            list={sorted}
+            onClick={this.props.onClick}
+          />
+        </Header>
         <Stats
           path={selected}
           content={content}
           enPOT={selected.endsWith('.po') ? list['i18n/en.pot'] : ''}
         />
-        {content && <Highlight lang={ext2Lang[ext]}>{content}</Highlight>}
+        {this.contentView()}
       </div>
     )
   }

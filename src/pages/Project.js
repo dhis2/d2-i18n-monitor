@@ -58,13 +58,22 @@ function Flags({ list }) {
 
 const paths = ['.travis.yml', 'package.json', 'i18n/en.pot']
 
+// only PO files will be editable, otherwise the Edit mode icon should be greyed out
+const MODE_READ = 'file/READ'
+const MODE_WRITE = 'file/WRITE'
+
 class ProjectPage extends Page {
   state = {
     loading: true,
     repo: null,
-    selectedFile: 'package.json'
-    // selectedFile: 'i18n/en.pot'
+    selectedFile: 'i18n/en.pot',
+    mode: MODE_READ
   }
+
+  toggleEditMode = () =>
+    this.setState({
+      mode: this.state.mode === MODE_READ ? MODE_WRITE : MODE_READ
+    })
 
   async componentDidMount() {
     try {
@@ -113,7 +122,7 @@ class ProjectPage extends Page {
   onClick = selectedFile => this.setState({ selectedFile })
 
   render() {
-    if (this.state.loading) {
+    /**/ if (this.state.loading) {
       return (
         <div className="mt-5 text-center">
           <CircularProgress size={100} thickness={2} />
@@ -121,7 +130,7 @@ class ProjectPage extends Page {
       )
     }
 
-    const { repo, files, selectedFile } = this.state
+    const { repo, files } = this.state
     const languages = repo.topics.filter(i => i.startsWith('lang-'))
     return (
       <Template>
@@ -137,8 +146,10 @@ class ProjectPage extends Page {
           <div className="mt-3">
             <Files
               list={files}
-              selected={selectedFile}
               onClick={this.onClick}
+              onToggleMode={this.toggleEditMode}
+              selected={this.state.selectedFile}
+              editMode={this.state.mode === MODE_WRITE}
             />
           </div>
         </div>
