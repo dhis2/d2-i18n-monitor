@@ -91,9 +91,7 @@ class ProjectPage extends Page {
 
       const filePaths = paths.slice(0).concat(langFiles)
       const results = await Promise.all(
-        filePaths.map(path =>
-          API.contents(owner, repo, path, 'dhis2-i18n-extract')
-        )
+        filePaths.map(path => API.contents(owner, repo, path))
       )
 
       const files = {}

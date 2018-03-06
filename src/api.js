@@ -73,6 +73,7 @@ export const api = new API()
 export default api
 
 const suggestionsCache = {}
+// Amagama API - same server used by Pootle
 export function getSuggestion(src, dst, text) {
   if (suggestionsCache[text]) {
     return suggestionsCache[text]
@@ -88,7 +89,7 @@ export function getSuggestion(src, dst, text) {
       suggestionsCache[text] = data
       resolve(data)
     } catch (e) {
-      console.log('Translation suggestions', e)
+      console.log('Amagama translation suggestions', e)
     }
   })
 }
