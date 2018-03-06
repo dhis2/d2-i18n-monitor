@@ -15,6 +15,7 @@ const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  align-items: flex-start;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
   &:last-child {
@@ -30,13 +31,15 @@ const Text = Column.extend`
   padding: 8px 8px 8px 16px;
 `
 
-const Row = ({ text, translation, isRTL, onChange }) => (
+const Row = ({ dstLng, text, translation, isRTL, onChange }) => (
   <RowContainer>
     <Text>{text}</Text>
     <Column>
       <EditableText
         isRTL={isRTL}
         msgId={text}
+        srcLng={'en'}
+        dstLng={dstLng}
         value={translation}
         onChange={onChange}
       />
@@ -48,6 +51,7 @@ const RTL_LANGS = [
   'ar',
   'arc',
   'dv',
+  'fa',
   'far',
   'ha',
   'he',
@@ -102,6 +106,7 @@ export class POEditor extends React.Component {
         isRTL={RTL_LANGS.includes(this.langCode())}
         key={`msgId-${k}`}
         text={k}
+        dstLng={this.langCode()}
         translation={dst[k] || ''}
         onChange={this.onChange}
       />

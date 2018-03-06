@@ -66,8 +66,10 @@ class ProjectPage extends Page {
   state = {
     loading: true,
     repo: null,
-    selectedFile: 'i18n/en.pot',
-    mode: MODE_READ
+    // selectedFile: 'i18n/en.pot',
+    selectedFile: 'i18n/ur.po',
+    // mode: MODE_READ
+    mode: MODE_WRITE
   }
 
   toggleEditMode = () =>

@@ -71,3 +71,24 @@ class API {
 
 export const api = new API()
 export default api
+
+const suggestionsCache = {}
+export function getSuggestion(src, dst, text) {
+  if (suggestionsCache[text]) {
+    return suggestionsCache[text]
+  }
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { data } = await axios.get(
+        `https://amagama-live.translatehouse.org/api/v1/${src}/${dst}/unit/${encodeURI(
+          text
+        )}`
+      )
+      suggestionsCache[text] = data
+      resolve(data)
+    } catch (e) {
+      console.log('Translation suggestions', e)
+    }
+  })
+}
