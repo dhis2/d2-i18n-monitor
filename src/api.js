@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { base64Decode } from './helpers'
+import { base64Decode, base64Encode } from './helpers'
 
 axios.defaults.baseURL = 'https://api.github.com/'
 
@@ -17,11 +17,109 @@ class API {
     }
   }
 
-  request(url, method = 'GET') {
+  request(url, method = 'GET', data = {}) {
     return axios.request({
       url,
       method,
+      data,
       headers: this.headers()
+    })
+  }
+
+  fetchBranch = (owner, repo, branch) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await this.request(
+          `/repos/${owner}/${repo}/git/refs/heads/${branch}`
+        )
+        resolve(data)
+      } catch (e) {
+        reject(null)
+      }
+    })
+  }
+
+  createBranch(owner, repo, branch, sha) {
+    return this.request(`/repos/${owner}/${repo}/git/refs`, 'POST', {
+      sha,
+      ref: `refs/heads/${branch}`
+    })
+  }
+
+  createAndFetchBranch(owner, repo, branch) {
+    return new Promise(async (resolve, reject) => {
+      let branchRef
+      try {
+        branchRef = await this.fetchBranch(owner, repo, branch)
+      } catch (e) {
+        const { object: { sha: masterSHA } } = await this.fetchBranch(
+          owner,
+          repo,
+          'master'
+        )
+        const res = await this.createBranch(owner, repo, branch, masterSHA)
+        branchRef = res.data
+      }
+
+      resolve(branchRef)
+    })
+  }
+
+  fetchFile = (owner, repo, path, branch) =>
+    this.request(`/repos/${owner}/${repo}/contents/${path}?ref=${branch}`)
+
+  createFile(owner, repo, path, branch, content, message) {
+    return this.request(`/repos/${owner}/${repo}/contents/${path}`, 'PUT', {
+      path,
+      message,
+      branch,
+      content: base64Encode(content)
+    })
+  }
+
+  updateFile(owner, repo, path, branch, content, message, sha) {
+    return this.request(`/repos/${owner}/${repo}/contents/${path}`, 'PUT', {
+      sha,
+      path,
+      message,
+      branch,
+      content: base64Encode(content)
+    })
+  }
+
+  createOrUpdateFile(owner, repo, path, branch, content, message) {
+    return new Promise(async (resolve, reject) => {
+      let file
+      try {
+        const { data: { sha: fileSHA } } = await this.fetchFile(
+          owner,
+          repo,
+          path,
+          branch
+        )
+        const resUpdate = await this.updateFile(
+          owner,
+          repo,
+          path,
+          branch,
+          content,
+          message,
+          fileSHA
+        )
+        file = resUpdate.data
+      } catch (e) {
+        const resCreate = this.createFile(
+          owner,
+          repo,
+          path,
+          branch,
+          content,
+          message
+        )
+        file = resCreate.data
+      }
+
+      resolve(file)
     })
   }
 

@@ -1,14 +1,16 @@
 import React from 'react'
-import { gettextToI18next } from 'i18next-conv'
+import { gettextToI18next, i18nextToPo } from 'i18next-conv'
 import styled from 'styled-components'
 import EditableText from './EditableText'
+import API from 'api'
+import { Snackbar } from 'material-ui'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #f7f8f9;
   font-size: 14px;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 0;
 `
 
 const RowContainer = styled.div`
@@ -18,6 +20,10 @@ const RowContainer = styled.div`
   align-items: flex-start;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
+  &:first-of-type {
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+  }
+
   &:last-child {
     border-bottom: 0;
   }
@@ -25,10 +31,15 @@ const RowContainer = styled.div`
 
 const Column = styled.div`
   width: 50%;
-  padding: 4px 8px;
+  padding: 8px;
 `
 const Text = Column.extend`
   padding: 8px 8px 8px 16px;
+`
+
+const Button = styled.button`
+  margin: 25px auto;
+  width: 250px;
 `
 
 const Row = ({ dstLng, text, translation, isRTL, onChange }) => (
@@ -65,8 +76,14 @@ const RTL_LANGS = [
 
 export class POEditor extends React.Component {
   state = {
+    showSnackBar: false,
     src: {},
     dst: {}
+  }
+
+  constructor(props) {
+    super(props)
+    this.onSave = this.onSave.bind(this)
   }
 
   componentDidMount() {
@@ -113,7 +130,52 @@ export class POEditor extends React.Component {
     ))
   }
 
+  async onSave() {
+    // TODO: validate save before allowing commit
+
+    const { dst } = this.state
+    const json = {}
+    Object.keys(dst).forEach(k => {
+      if (dst[k]) {
+        json[k] = dst[k]
+      }
+    })
+
+    const lang = this.langCode()
+    const encodedPO = await i18nextToPo(lang, JSON.stringify(json))
+    const contentsPO = new TextDecoder('utf-8').decode(encodedPO)
+
+    const { path, owner, repo } = this.props
+    const branch = `i18n/${lang}-translations`
+    await API.createAndFetchBranch(owner, repo, branch)
+
+    // NOTE: frequently hitting save will return 422, because GitHub systems
+    // take a few seconds to sync. Hitting Save again will return ^1 SHA hash
+    // for the committed file path
+    const message = `translations(${lang})`
+    await API.createOrUpdateFile(owner, repo, path, branch, contentsPO, message)
+
+    this.setState({ showSnackBar: true })
+  }
+
   render() {
-    return <Container>{this.view()}</Container>
+    return (
+      <Container>
+        {this.view()}
+        <Button
+          onClick={this.onSave}
+          className="btn btn-primary w-a"
+          type="button"
+        >
+          Save
+        </Button>
+        <Snackbar
+          onClose={() => this.setState({ showSnackBar: false })}
+          open={this.state.showSnackBar}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          message={<span>saved successfully.</span>}
+        />
+      </Container>
+    )
   }
 }

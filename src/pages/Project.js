@@ -122,7 +122,7 @@ class ProjectPage extends Page {
   onClick = selectedFile => this.setState({ selectedFile })
 
   render() {
-    /**/ if (this.state.loading) {
+    if (this.state.loading) {
       return (
         <div className="mt-5 text-center">
           <CircularProgress size={100} thickness={2} />
@@ -131,6 +131,7 @@ class ProjectPage extends Page {
     }
 
     const { repo, files } = this.state
+    const { owner, repo: repoName } = this.props.match.params
     const languages = repo.topics.filter(i => i.startsWith('lang-'))
     return (
       <Template>
@@ -146,6 +147,8 @@ class ProjectPage extends Page {
           <div className="mt-3">
             <Files
               list={files}
+              owner={owner}
+              repo={repoName}
               onClick={this.onClick}
               onToggleMode={this.toggleEditMode}
               selected={this.state.selectedFile}

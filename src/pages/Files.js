@@ -71,8 +71,11 @@ export class Files extends React.Component {
     const content = list[selected]
 
     if (editMode && selected.endsWith('.po')) {
+      const { owner, repo } = this.props
       return (
         <POEditor
+          owner={owner}
+          repo={repo}
           path={selected}
           content={content}
           potContent={list['i18n/en.pot']}
