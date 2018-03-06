@@ -33,7 +33,7 @@ export class Stats extends React.Component {
     const { path, content } = this.props
 
     if (path.endsWith('.po') || path.endsWith('.pot')) {
-      const msgs = content.match(/^msgid /gim)
+      const msgs = content.match(/^msgid "[^"]+/gim)
       const msgCount = msgs ? msgs.length : 0
 
       if (path.endsWith('.pot')) {
@@ -44,7 +44,7 @@ export class Stats extends React.Component {
         })
       } else if (path.endsWith('.po')) {
         const { enPOT } = this.props
-        const enMsgs = enPOT.match(/^msgid /gim)
+        const enMsgs = enPOT.match(/^msgid "[^"]+/gim)
         const enMsgCount = enMsgs ? enMsgs.length : 0
 
         messages.push({
