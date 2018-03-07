@@ -29,6 +29,9 @@ Any repo. with internationalization support will be a _blue_ link. Click on the 
 
 Here you will see a bunch of files. Apart from file contents, the valuable information is content analysis which are presented in a table above contents.
 
+**Note**
+All file contents used below are taken from the **master** branch.
+
 #### package.json
 If [d2-i18n](https://github.com/dhis2/d2-i18n) support has been implemented we detect the presence of the following scripts.
 
@@ -59,3 +62,10 @@ Under **ur.po** you will see,
 You can click on the **Pencil Icon** on the very left of files. This will help you edit any _LANGUAGE-CODE.po_ file. As an example if we are on _ur.po_ file. This page will show strings in _English_ on the left side with strings in _Urdu_ on the right side.
 
 If you editing a translation for string *Delete* and your cursor is inside the edit text on the right. A bunch of translation suggestions will appear. You can click on any one to replace existing translation for *Delete*.
+
+Once you are finished translating, hit **Save** at the bottom of the page.
+
+- We will create a branch inside the project repo. by the name **i18n/LANGUAGE-CODE-translations**.
+- We will push all updated language strings in **LANGUAGE-CODE.po** to the same path as on **master** branch.
+
+At this point you must create a **Pull Request** from **i18n/LANGUAGE-CODE-translations** against the **master** branch to merge updates.
