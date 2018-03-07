@@ -22,12 +22,12 @@ Once configured you will see all repos with postfix **-app** under page **Projec
 ### Detection
 Repos. where [d2-i18n](https://github.com/dhis2/d2-i18n) support has been implemented. You should attach a GitHub topic **d2-i18n** to that repo. Additionally attach **lang-en** as English is our default language.
 
-Any additionally language support can be added by adding topic **lang-LANGCODE** to a repo. For example. adding support for **Urdu** language is as simple as attaching **lang-ur** topic to repo. Target language files for example _ur.po_ might not be present, but this can easily be managed using this **d2-i18n-monitor**. More on this under **Contribution** below.
+Any additionally language support can be added by adding topic **lang-LANGUAGE-CODE** to a repo. For example. adding support for **Urdu** language is as simple as attaching **lang-ur** topic to repo. Target language files for example _ur.po_ might not be present, but this can easily be managed using this **d2-i18n-monitor**. More on this under **Contribution** below.
 
 ### Contribution
 Any repo. with internationalization support will be a _blue_ link. Click on the link to go to the project page.
 
-Here you will see a bunch of files. Apart from file contents, the valuable information is analysis on the contents which are presented in a statistics table above contents.
+Here you will see a bunch of files. Apart from file contents, the valuable information is content analysis which are presented in a table above contents.
 
 #### package.json
 If [d2-i18n](https://github.com/dhis2/d2-i18n) support has been implemented we detect the presence of the following scripts.
@@ -44,4 +44,14 @@ Above file contents you can see the number of *msgid* strings that need to be tr
 
 #### .travis.yml
 We only detect the presence of *yarn lint* nd *yarn build* step be part of _.travis.yml_ file.
+
+#### LANGUAGE-CODE.po
+Replace **LANGUAGE-CODE** with your language. In this section I will use **Urdu** as an example to elaborate on the workflow.
+
+Assuming _lang-ur_ langauge has been attached to the repo. Project page will show **ur.po** file. Presence of **ur.po** inside target repo is not necessary. If present contents of **ur.po** will appear under.
+
+Under **ur.po** you will see,
+- **Total** Reperesenting the total number of _msgid_ strings present in _en.pot_ file. Because _en.pot_ is the standard file we compare all our translations against.
+- **Translated** Number of strings that have been translated into _Urdu_.
+- **Health** Detect health _Urdu_ language for this project repo.
 
