@@ -46,7 +46,7 @@ Above file contents you can see the number of *msgid* strings that need to be tr
 We only detect the presence of *yarn lint* nd *yarn build* step be part of _.travis.yml_ file.
 
 #### LANGUAGE-CODE.po
-Replace **LANGUAGE-CODE** with your language. In this section I will use **Urdu** as an example to elaborate on the workflow.
+Replace **LANGUAGE-CODE** with your language. In this section I will use language **Urdu** represented by code **ur** as an example to elaborate the workflow.
 
 Assuming _lang-ur_ langauge has been attached to the repo. Project page will show **ur.po** file. Presence of **ur.po** inside target repo is not necessary. If present contents of **ur.po** will appear under.
 
@@ -55,3 +55,7 @@ Under **ur.po** you will see,
 - **Translated** Number of strings that have been translated into _Urdu_.
 - **Health** Detect health _Urdu_ language for this project repo.
 
+### Edit Mode
+You can click on the **Pencil Icon** on the very left of files. This will help you edit any _LANGUAGE-CODE.po_ file. As an example if we are on _ur.po_ file. This page will show strings in _English_ on the left side with strings in _Urdu_ on the right side.
+
+If you editing a translation for string *Delete* and your cursor is inside the edit text on the right. A bunch of translation suggestions will appear. You can click on any one to replace existing translation for *Delete*.
