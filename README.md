@@ -1,6 +1,5 @@
 ## Purpose
-We use *d2-i18n-monitor* to track progress of language support across our entire DHIS2 platform (only frontend for now). Open 
-[d2-i18n-monitor](http://dhis2.github.io/d2-i18n-monitor/).
+We use [d2-i18n-monitor](http://dhis2.github.io/d2-i18n-monitor/) to track progress of language support across our entire DHIS2 platform (only frontend for now).
 
 ### Configuration
 You need a _Personal access token_ to use this monitoring service.
@@ -37,4 +36,12 @@ If [d2-i18n](https://github.com/dhis2/d2-i18n) support has been implemented we d
 - localize: Use _pot_ and _po_ files to generate _i18next_ compatible _json_ files.
 - prettify: If code prettification is implemented or not. Not necessary in anyway but important to standardize our entire 30. repo's with countless lines to look the same.
 - build: Detect if build step has been present.
+
+#### en.pot
+All the translatable language strings part of _source code_ are present in en.pot file. This file is generated automatically on **dev** and **build**
+
+Above file contents you can see the number of *msgid* strings that need to be translated.
+
+#### .travis.yml
+We only detect the presence of *yarn lint* nd *yarn build* step be part of _.travis.yml_ file.
 
