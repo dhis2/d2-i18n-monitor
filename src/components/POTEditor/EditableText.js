@@ -15,14 +15,6 @@ const Input = styled.textarea`
   padding: 4px 8px;
 `
 
-// TODO
-// https://amagama-live.translatehouse.org/api/v1/en/fa/unit/
-// for empty Editable text automatically fetch the list of translation and show them under the input field as list
-// then use has the possibility of choosing a translation by using Ctrl + [1, 5] keys. Translations are ranked by
-// quality. So the quality is the indicator for presenting suggestions. If no suggestions are there then no need to
-// present any additional dialog
-// may be ability to click and select on of the translations and put them right into the translation box
-
 export default class EditableText extends React.Component {
   state = {
     editing: false

@@ -3,7 +3,7 @@ import { gettextToI18next, i18nextToPo } from 'i18next-conv'
 import styled from 'styled-components'
 import EditableText from './EditableText'
 import API from 'api'
-import { Button, Snackbar } from 'material-ui'
+import { TextField, Button, Snackbar } from 'material-ui'
 
 const Container = styled.div`
   display: flex;
@@ -36,6 +36,11 @@ const Column = styled.div`
 const Text = Column.extend`
   padding: 8px 8px 8px 16px;
 `
+
+const commitMsgStyle = {
+  marginBottom: 30,
+  width: '50%'
+}
 
 const Row = ({ dstLng, text, translation, isRTL, onChange }) => (
   <RowContainer>
@@ -72,6 +77,7 @@ const RTL_LANGS = [
 export class POEditor extends React.Component {
   state = {
     showSnackBar: false,
+    commitMsg: this.defaultCommitMsg(),
     src: {},
     dst: {}
   }
@@ -87,6 +93,10 @@ export class POEditor extends React.Component {
 
   componentWillReceiveProps(newProps) {
     this.load(newProps)
+  }
+
+  defaultCommitMsg() {
+    return `translations(${this.langCode()})`
   }
 
   langCode() {
@@ -145,17 +155,37 @@ export class POEditor extends React.Component {
     // NOTE: frequently hitting save will return 422, because GitHub systems
     // take a few seconds to sync. Hitting Save again will return ^1 SHA hash
     // for the committed file path
-    const message = `translations(${lang})`
-    await API.createOrUpdateFile(owner, repo, path, branch, contentsPO, message)
+    const { commitMsg } = this.state
+    await API.createOrUpdateFile(
+      owner,
+      repo,
+      path,
+      branch,
+      contentsPO,
+      commitMsg
+    )
 
-    this.setState({ showSnackBar: true })
+    this.setState({
+      showSnackBar: true,
+      commitMsg: this.defaultCommitMsg()
+    })
   }
+
+  setCommitMsg = evt => this.setState({ commitMsg: evt.target.value })
 
   render() {
     return (
       <Container>
         {this.view()}
-        <div className="w-100 pt-4 pb-4 d-flex align-items-center justify-content-center">
+        <div className="w-100 pt-5 pb-4 d-flex flex-column align-items-center justify-content-center">
+          <TextField
+            name="commitMsg"
+            label="Commit Message"
+            style={commitMsgStyle}
+            onChange={this.setCommitMsg}
+            value={this.state.commitMsg}
+          />
+
           <Button variant="raised" color="primary" onClick={this.onSave}>
             Save
           </Button>

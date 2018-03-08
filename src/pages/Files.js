@@ -89,6 +89,7 @@ export class Files extends React.Component {
 
     return <Highlight lang={ext2Lang[ext]}>{content}</Highlight>
   }
+
   render() {
     const { selected, list } = this.props
     const sorted = Object.keys(list).sort((a, b) =>
