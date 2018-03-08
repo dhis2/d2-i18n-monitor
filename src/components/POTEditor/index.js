@@ -3,7 +3,7 @@ import { gettextToI18next, i18nextToPo } from 'i18next-conv'
 import styled from 'styled-components'
 import EditableText from './EditableText'
 import API from 'api'
-import { Snackbar } from 'material-ui'
+import { Button, Snackbar } from 'material-ui'
 
 const Container = styled.div`
   display: flex;
@@ -35,11 +35,6 @@ const Column = styled.div`
 `
 const Text = Column.extend`
   padding: 8px 8px 8px 16px;
-`
-
-const Button = styled.button`
-  margin: 25px auto;
-  width: 250px;
 `
 
 const Row = ({ dstLng, text, translation, isRTL, onChange }) => (
@@ -131,8 +126,6 @@ export class POEditor extends React.Component {
   }
 
   async onSave() {
-    // TODO: validate save before allowing commit
-
     const { dst } = this.state
     const json = {}
     Object.keys(dst).forEach(k => {
@@ -162,13 +155,11 @@ export class POEditor extends React.Component {
     return (
       <Container>
         {this.view()}
-        <Button
-          onClick={this.onSave}
-          className="btn btn-primary w-a"
-          type="button"
-        >
-          Save
-        </Button>
+        <div className="w-100 pt-4 pb-4 d-flex align-items-center justify-content-center">
+          <Button variant="raised" color="primary" onClick={this.onSave}>
+            Save
+          </Button>
+        </div>
         <Snackbar
           onClose={() => this.setState({ showSnackBar: false })}
           open={this.state.showSnackBar}
