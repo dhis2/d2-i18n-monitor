@@ -22,14 +22,14 @@ const ValidTopic = ({ text, description }) => (
 
 const topics = [
   {
-    name: 'd2-i18next',
-    description: 'd2-i18next library has been integrated'
+    name: 'd2-i18n',
+    description: 'd2-i18n library has been integrated',
   },
   {
-    name: 'd2-i18next-backend',
+    name: 'd2-i18n-backend',
     description:
-      'd2-i18next library has been integrated into backend. Details of this implementation is to be thought out.'
-  }
+      'd2-i18n library has been integrated into backend. Details of this implementation is to be thought out.',
+  },
 ]
 
 class ProjectsPage extends Page {
@@ -46,9 +46,9 @@ class ProjectsPage extends Page {
 
           <p>
             Use GitHub Topic to inform this service if a certain functionality
-            has been implemented. Example. attach topic{' '}
-            <Topic text="d2-i18next" /> to a repository. It will signal that
-            i18next support has been implemented in the repo.
+            has been implemented. Example. attach topic <Topic text="d2-i18n" />{' '}
+            to a repository. It will signal that i18next support has been
+            implemented in the repo.
           </p>
 
           <div className="mt-3">

@@ -47,7 +47,7 @@ const Header = styled.div`
 `
 
 const EditMode = styled.div.attrs({
-  className: 'fa fa-pencil-square-o'
+  className: 'fa fa-pencil-square-o',
 })`
   cursor: pointer;
   margin-right: 15px;
@@ -66,7 +66,7 @@ export class Files extends React.Component {
       yml: 'yaml',
       json: 'json',
       pot: 'lsl',
-      po: 'lsl'
+      po: 'lsl',
     }
     const content = list[selected]
 
@@ -95,7 +95,7 @@ export class Files extends React.Component {
     const sorted = Object.keys(list).sort((a, b) =>
       a
         .slice(a.lastIndexOf('.') + 1)
-        .localeCompare(b.slice(b.lastIndexOf('.') + 1))
+        .localeCompare(b.slice(b.lastIndexOf('.') + 1)),
     )
 
     const { editMode } = this.props
