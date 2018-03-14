@@ -17,7 +17,7 @@ const Input = styled.textarea`
 
 export default class EditableText extends React.Component {
   state = {
-    editing: false
+    editing: false,
   }
 
   onFocus = () => this.setState({ editing: true })

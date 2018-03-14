@@ -15,7 +15,8 @@ const Tab = styled.div`
   background-color: ${p => (p.selected ? '#0070ff' : '#f7f8f9')};
   margin-right: 15px;
   padding: 4px 15px 4px 15px;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: ${p => (p.selected ? 'bold' : 'normal')};
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
 `
@@ -47,11 +48,12 @@ const Header = styled.div`
 `
 
 const EditMode = styled.div.attrs({
-  className: 'fa fa-pencil-square-o'
+  className: 'fa fa-pencil-square-o',
 })`
   cursor: pointer;
   margin-right: 15px;
   padding: 0 10px;
+  font-size: 18px;
   height: 26px;
   line-height: 26px;
   color: ${p => (p.enabled ? '#fff' : '#000')};
@@ -66,7 +68,7 @@ export class Files extends React.Component {
       yml: 'yaml',
       json: 'json',
       pot: 'lsl',
-      po: 'lsl'
+      po: 'lsl',
     }
     const content = list[selected]
 
@@ -95,7 +97,7 @@ export class Files extends React.Component {
     const sorted = Object.keys(list).sort((a, b) =>
       a
         .slice(a.lastIndexOf('.') + 1)
-        .localeCompare(b.slice(b.lastIndexOf('.') + 1))
+        .localeCompare(b.slice(b.lastIndexOf('.') + 1)),
     )
 
     const { editMode } = this.props

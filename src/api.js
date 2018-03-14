@@ -13,7 +13,7 @@ class API {
   headers() {
     return {
       Accept: `application/vnd.github.${VERSION}+json`,
-      Authorization: `token ${this.accessToken}`
+      Authorization: `token ${this.accessToken}`,
     }
   }
 
@@ -22,7 +22,7 @@ class API {
       url,
       method,
       data,
-      headers: this.headers()
+      headers: this.headers(),
     })
   }
 
@@ -30,7 +30,7 @@ class API {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await this.request(
-          `/repos/${owner}/${repo}/git/refs/heads/${branch}`
+          `/repos/${owner}/${repo}/git/refs/heads/${branch}`,
         )
         resolve(data)
       } catch (e) {
@@ -42,7 +42,7 @@ class API {
   createBranch(owner, repo, branch, sha) {
     return this.request(`/repos/${owner}/${repo}/git/refs`, 'POST', {
       sha,
-      ref: `refs/heads/${branch}`
+      ref: `refs/heads/${branch}`,
     })
   }
 
@@ -55,7 +55,7 @@ class API {
         const { object: { sha: masterSHA } } = await this.fetchBranch(
           owner,
           repo,
-          'master'
+          'master',
         )
         const res = await this.createBranch(owner, repo, branch, masterSHA)
         branchRef = res.data
@@ -73,7 +73,7 @@ class API {
       path,
       message,
       branch,
-      content: base64Encode(content)
+      content: base64Encode(content),
     })
   }
 
@@ -83,7 +83,7 @@ class API {
       path,
       message,
       branch,
-      content: base64Encode(content)
+      content: base64Encode(content),
     })
   }
 
@@ -95,7 +95,7 @@ class API {
           owner,
           repo,
           path,
-          branch
+          branch,
         )
         const resUpdate = await this.updateFile(
           owner,
@@ -104,7 +104,7 @@ class API {
           branch,
           content,
           message,
-          fileSHA
+          fileSHA,
         )
         file = resUpdate.data
       } catch (e) {
@@ -114,7 +114,7 @@ class API {
           path,
           branch,
           content,
-          message
+          message,
         )
         file = resCreate.data
       }
@@ -147,20 +147,20 @@ class API {
         const res = await axios.request({
           url,
           method: 'GET',
-          headers: this.headers()
+          headers: this.headers(),
         })
 
         const { data: { content } } = res
         resolve({
           path,
           found: true,
-          content: base64Decode(content)
+          content: base64Decode(content),
         })
       } catch (e) {
         resolve({
           path,
           found: false,
-          content: null
+          content: null,
         })
       }
     })
@@ -181,8 +181,8 @@ export function getSuggestion(src, dst, text) {
     try {
       const { data } = await axios.get(
         `https://amagama-live.translatehouse.org/api/v1/${src}/${dst}/unit/${encodeURI(
-          text
-        )}`
+          text,
+        )}`,
       )
       suggestionsCache[text] = data
       resolve(data)

@@ -39,7 +39,7 @@ const Text = Column.extend`
 
 const commitMsgStyle = {
   marginBottom: 30,
-  width: '50%'
+  width: '50%',
 }
 
 const Row = ({ dstLng, text, translation, isRTL, onChange }) => (
@@ -71,7 +71,7 @@ const RTL_LANGS = [
   'ku',
   'ps',
   'ur',
-  'yi'
+  'yi',
 ]
 
 export class POEditor extends React.Component {
@@ -79,7 +79,7 @@ export class POEditor extends React.Component {
     showSnackBar: false,
     commitMsg: this.defaultCommitMsg(),
     src: {},
-    dst: {}
+    dst: {},
   }
 
   constructor(props) {
@@ -117,8 +117,8 @@ export class POEditor extends React.Component {
     this.setState({
       dst: {
         ...this.state.dst,
-        [msgId]: translation
-      }
+        [msgId]: translation,
+      },
     })
 
   view() {
@@ -162,12 +162,12 @@ export class POEditor extends React.Component {
       path,
       branch,
       contentsPO,
-      commitMsg
+      commitMsg,
     )
 
     this.setState({
       showSnackBar: true,
-      commitMsg: this.defaultCommitMsg()
+      commitMsg: this.defaultCommitMsg(),
     })
   }
 
