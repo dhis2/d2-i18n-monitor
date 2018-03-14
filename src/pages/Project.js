@@ -66,10 +66,8 @@ class ProjectPage extends Page {
   state = {
     loading: true,
     repo: null,
-    // selectedFile: 'i18n/en.pot',
-    selectedFile: 'i18n/ur.po',
-    // mode: MODE_READ
-    mode: MODE_WRITE
+    selectedFile: 'i18n/en.pot',
+    mode: MODE_READ
   }
 
   toggleEditMode = () =>
@@ -124,9 +122,11 @@ class ProjectPage extends Page {
   render() {
     if (this.state.loading) {
       return (
-        <div className="mt-5 text-center">
-          <CircularProgress size={100} thickness={2} />
-        </div>
+        <Template>
+          <div className="mt-5 text-center">
+            <CircularProgress size={100} thickness={2} />
+          </div>
+        </Template>
       )
     }
 
@@ -135,8 +135,8 @@ class ProjectPage extends Page {
     const languages = repo.topics.filter(i => i.startsWith('lang-'))
     return (
       <Template>
-        <div className="mt-5">
-          <h2 className="mb-3">{repo.name}</h2>
+        <div className="mt-4">
+          <h3 className="mb-3">{repo.name}</h3>
           <p className="font-italic mt-3">{repo.description}</p>
 
           <div className="mt-2">

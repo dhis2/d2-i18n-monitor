@@ -10,6 +10,7 @@ const Description = styled.div`
 
 const IconContainer = styled.span`
   margin-left: 15px;
+  font-size: 20px;
 
   &::before {
     color: #000;
@@ -40,7 +41,7 @@ export default function Item({
       <td className="text-right align-middle">
         {topics.includes('d2-i18n') && <Icon name="language" />}
         <a href={html_url} target="_blank" rel="noopener noreferrer">
-          <Icon name="external-link" />
+          <Icon name="github" />
         </a>
       </td>
     </tr>

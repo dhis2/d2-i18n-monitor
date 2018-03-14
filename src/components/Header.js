@@ -3,7 +3,7 @@ import { Menu } from 'components'
 
 export function Header() {
   return (
-    <div className="text-center">
+    <div className="row">
       <Menu />
     </div>
   )
