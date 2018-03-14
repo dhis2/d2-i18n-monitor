@@ -43,7 +43,7 @@ const flagImgs = {
   no: nbFlag,
   pt: ptFlag,
   sa: saFlag,
-  ur: pkFlag
+  ur: pkFlag,
 }
 
 const Flag = styled.img`
@@ -67,12 +67,12 @@ class ProjectPage extends Page {
     loading: true,
     repo: null,
     selectedFile: 'i18n/en.pot',
-    mode: MODE_READ
+    mode: MODE_READ,
   }
 
   toggleEditMode = () =>
     this.setState({
-      mode: this.state.mode === MODE_READ ? MODE_WRITE : MODE_READ
+      mode: this.state.mode === MODE_READ ? MODE_WRITE : MODE_READ,
     })
 
   async componentDidMount() {
@@ -89,7 +89,7 @@ class ProjectPage extends Page {
 
       const filePaths = paths.slice(0).concat(langFiles)
       const results = await Promise.all(
-        filePaths.map(path => API.contents(owner, repo, path))
+        filePaths.map(path => API.contents(owner, repo, path)),
       )
 
       const files = {}
@@ -109,7 +109,7 @@ class ProjectPage extends Page {
       this.setState({
         files,
         loading: false,
-        repo: repoJSON
+        repo: repoJSON,
       })
     } catch (e) {
       console.log('exception')

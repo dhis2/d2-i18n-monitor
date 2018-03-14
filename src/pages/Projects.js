@@ -23,13 +23,13 @@ const ValidTopic = ({ text, description }) => (
 const topics = [
   {
     name: 'd2-i18n',
-    description: 'd2-i18n library has been integrated'
+    description: 'd2-i18n library has been integrated',
   },
   {
     name: 'd2-i18n-backend',
     description:
-      'd2-i18n library has been integrated into backend. Details of this implementation is to be thought out.'
-  }
+      'd2-i18n library has been integrated into backend. Details of this implementation is to be thought out.',
+  },
 ]
 
 class ProjectsPage extends Page {
