@@ -40,7 +40,7 @@ export class Stats extends React.Component {
         messages.push({
           type: 'primary',
           label: 'Num. of messages',
-          value: <MsgValue>{msgCount}</MsgValue>
+          value: <MsgValue>{msgCount}</MsgValue>,
         })
       } else if (path.endsWith('.po')) {
         const { enPOT } = this.props
@@ -50,20 +50,20 @@ export class Stats extends React.Component {
         messages.push({
           type: 'primary',
           label: 'Total',
-          value: <MsgValue>{enMsgCount}</MsgValue>
+          value: <MsgValue>{enMsgCount}</MsgValue>,
         })
         messages.push({
           type: msgCount < enMsgCount ? 'warning' : 'secondary',
           label: 'Translated',
-          value: msgCount === 0 ? <Skull /> : <MsgValue>{msgCount}</MsgValue>
+          value: msgCount === 0 ? <Skull /> : <MsgValue>{msgCount}</MsgValue>,
         })
 
-        let health = msgCount === 0 ? 0 : Math.toFixed(msgCount / enMsgCount, 0)
+        let health = msgCount === 0 ? 0 : (msgCount / enMsgCount).toFixed(2)
         messages.push({
           type:
             health === 0 ? 'danger' : health === 100 ? 'success' : 'warning',
           label: 'Health',
-          value: health === 0 ? <Skull /> : <MsgValue>{health}</MsgValue>
+          value: health < 10 ? <Skull /> : <MsgValue>{health}</MsgValue>,
         })
       }
     } else if (path.endsWith('package.json')) {
@@ -83,22 +83,22 @@ export class Stats extends React.Component {
       messages.push({
         type: extractPOTExists ? 'success' : 'danger',
         label: 'extract-pot',
-        value: extractPOTExists ? <Checkmark /> : <Skull />
+        value: extractPOTExists ? <Checkmark /> : <Skull />,
       })
       messages.push({
         type: localizeExists ? 'success' : 'danger',
         label: 'localize',
-        value: localizeExists ? <Checkmark /> : <Skull />
+        value: localizeExists ? <Checkmark /> : <Skull />,
       })
       messages.push({
         type: prettifyExists ? 'success' : 'danger',
         label: 'prettify',
-        value: prettifyExists ? <Checkmark /> : <Skull />
+        value: prettifyExists ? <Checkmark /> : <Skull />,
       })
       messages.push({
         type: buildExists ? 'success' : 'danger',
         label: 'build',
-        value: buildExists ? <Checkmark /> : <Skull />
+        value: buildExists ? <Checkmark /> : <Skull />,
       })
     } else if (path.endsWith('.travis.yml')) {
       const lintExists = content.includes('- yarn lint')
@@ -107,12 +107,12 @@ export class Stats extends React.Component {
       messages.push({
         type: lintExists ? 'success' : 'danger',
         label: 'yarn lint',
-        value: lintExists ? <Checkmark /> : <Skull />
+        value: lintExists ? <Checkmark /> : <Skull />,
       })
       messages.push({
         type: buildExists ? 'success' : 'danger',
         label: 'yarn build',
-        value: buildExists ? <Checkmark /> : <Skull />
+        value: buildExists ? <Checkmark /> : <Skull />,
       })
     }
 
