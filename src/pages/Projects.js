@@ -32,7 +32,10 @@ const topics = [
   },
 ]
 
-class ProjectsPage extends Page {
+@connect(({ config }) => ({ config }), null)
+export class ProjectsPage extends Page {
+  static path = '/projects'
+
   render() {
     return (
       <Template>
@@ -77,8 +80,3 @@ class ProjectsPage extends Page {
     )
   }
 }
-
-ProjectsPage = connect(({ config }) => ({ config }), null)(ProjectsPage)
-ProjectsPage.path = '/projects'
-
-export { ProjectsPage }

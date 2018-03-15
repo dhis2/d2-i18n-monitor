@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { Button, Snackbar, TextField } from 'material-ui'
 import { setConfig } from 'reducers'
 
-class ConfigPage extends React.Component {
+@connect(({ config }) => ({ config }), { setConfig })
+export class ConfigPage extends React.Component {
   static path = '/config'
 
   state = {
@@ -104,6 +105,3 @@ class ConfigPage extends React.Component {
     )
   }
 }
-
-ConfigPage = connect(({ config }) => ({ config }), { setConfig })(ConfigPage)
-export { ConfigPage }

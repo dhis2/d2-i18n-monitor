@@ -72,7 +72,10 @@ const paths = ['.travis.yml', 'package.json', 'i18n/en.pot']
 const MODE_READ = 'file/READ'
 const MODE_WRITE = 'file/WRITE'
 
-class ProjectPage extends Page {
+@connect(({ config }) => ({ config }), null)
+export class ProjectPage extends Page {
+  static path = '/project/:owner/:repo'
+
   state = {
     loading: true,
     repo: null,
@@ -185,8 +188,3 @@ class ProjectPage extends Page {
     )
   }
 }
-
-ProjectPage = connect(({ config }) => ({ config }), null)(ProjectPage)
-ProjectPage.path = '/project/:owner/:repo'
-
-export { ProjectPage }
