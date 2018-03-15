@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router'
 import { Provider } from 'react-redux'
+import { hot } from 'react-hot-loader'
 import { HashRouter as Router } from 'react-router-dom'
 import { PersistGate } from 'redux-persist/integration/react'
 import { CircularProgress } from 'material-ui'
@@ -8,7 +9,7 @@ import { store, persistor } from './store'
 
 import * as pages from './pages'
 
-export default class App extends React.Component {
+export class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
@@ -41,3 +42,5 @@ export default class App extends React.Component {
     )
   }
 }
+
+export default hot(module)(App)
