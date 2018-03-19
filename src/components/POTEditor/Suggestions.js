@@ -16,6 +16,8 @@ const List = styled.div`
   padding: 0;
   direction: ${p => (p.isRTL ? 'rtl' : 'ltr')};
   text-align: ${p => (p.isRTL ? 'right' : 'left')};
+  font-size: ${p => (p.isRTL ? 16 : 14)}px;
+  font-family: ${p => (p.isRTL ? 'arabic' : 'sans-serif')};
 `
 const Item = styled.div`
   user-select: none;
@@ -29,7 +31,7 @@ const Item = styled.div`
 
 export default class Suggestions extends React.Component {
   state = {
-    list: []
+    list: [],
   }
 
   componentDidMount() {

@@ -11,6 +11,8 @@ const Input = styled.textarea`
   border: 0;
   width: 100%;
   outline: none;
+  font-size: ${p => (p.isRTL ? 16 : 14)}px;
+  font-family: ${p => (p.isRTL ? 'arabic' : 'sans-serif')};
   background-color: ${p => (p.editing ? '#e7e7e7' : '#efefef')};
   padding: 4px 8px;
 `

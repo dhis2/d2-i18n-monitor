@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+@font-face {
+  font-family: arabic;
+  font-weight: 300;
+  src: url('assets/fonts/NotoNaskhArabicUI-Regular.ttf');
+}
+
+@font-face {
+  font-family: arabic;
+  font-weight: 500;
+  src: url('assets/fonts/NotoNaskhArabicUI-Bold.ttf');
+}
