@@ -60,15 +60,6 @@ export class Stats extends React.Component {
 
         let health =
           msgCount === 0 ? 0 : (msgCount / enMsgCount * 100).toFixed(0)
-        console.log(
-          'msgCount',
-          msgCount,
-          'enMsgCount',
-          enMsgCount,
-          '/',
-          msgCount / enMsgCount,
-        )
-        console.log('health', health)
         messages.push({
           type: health === 0 ? 'danger' : health < 10 ? 'success' : 'warning',
           label: 'Health',
