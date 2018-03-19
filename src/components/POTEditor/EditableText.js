@@ -35,6 +35,10 @@ export default class EditableText extends React.Component {
     return (
       <Container>
         <Input
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck={false}
           isRTL={isRTL}
           value={value}
           editing={editing}
