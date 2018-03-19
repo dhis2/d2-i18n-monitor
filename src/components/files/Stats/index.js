@@ -58,12 +58,21 @@ export class Stats extends React.Component {
           value: msgCount === 0 ? <Skull /> : <MsgValue>{msgCount}</MsgValue>,
         })
 
-        let health = msgCount === 0 ? 0 : (msgCount / enMsgCount).toFixed(2)
+        let health =
+          msgCount === 0 ? 0 : (msgCount / enMsgCount * 100).toFixed(0)
+        console.log(
+          'msgCount',
+          msgCount,
+          'enMsgCount',
+          enMsgCount,
+          '/',
+          msgCount / enMsgCount,
+        )
+        console.log('health', health)
         messages.push({
-          type:
-            health === 0 ? 'danger' : health === 100 ? 'success' : 'warning',
+          type: health === 0 ? 'danger' : health < 10 ? 'success' : 'warning',
           label: 'Health',
-          value: health < 10 ? <Skull /> : <MsgValue>{health}</MsgValue>,
+          value: health < 10 ? <Skull /> : <MsgValue>{health}%</MsgValue>,
         })
       }
     } else if (path.endsWith('package.json')) {
