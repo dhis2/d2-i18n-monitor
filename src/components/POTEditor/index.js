@@ -13,6 +13,17 @@ const Container = styled.div`
   border-bottom: 0;
 `
 
+const Toolbar = styled.div`
+  margin: 15px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+`
+const ToolbarText = styled.div`
+  margin-right: 10px;
+`
+
 const RowContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -74,10 +85,15 @@ const RTL_LANGS = [
   'yi',
 ]
 
+const SHOW_ALL = 'All'
+const SHOW_EMPTY = 'Empty'
+const SHOW_FILLED = 'Filled'
+
 export class POEditor extends React.Component {
   state = {
     showSnackBar: false,
-    commitMsg: this.defaultCommitMsg(),
+    commitMsg: this.defaultCommitMsg(this.props),
+    show: SHOW_ALL,
     src: {},
     dst: {},
   }
@@ -92,29 +108,31 @@ export class POEditor extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    this.load(newProps)
     if (this.props.path !== newProps.path) {
       this.setState({
         dst: {},
       })
     }
+
+    this.load(newProps)
   }
 
-  defaultCommitMsg() {
-    return `translations(${this.langCode()})`
+  defaultCommitMsg(props) {
+    return `translations(${this.langCode(props)})`
   }
 
-  langCode() {
-    const { path } = this.props
+  langCode({ path }) {
     let code = path.substr(path.lastIndexOf('/') + 1)
     return code.substr(0, code.lastIndexOf('.'))
   }
 
-  async load({ content, potContent }) {
+  async load({ content, potContent, path }) {
     const src = JSON.parse(await gettextToI18next('en', potContent))
-    const dst = JSON.parse(await gettextToI18next(this.langCode(), content))
+    const dst = JSON.parse(
+      await gettextToI18next(this.langCode({ path }), content),
+    )
 
-    this.setState({ src, dst })
+    this.setState({ src, dst, commitMsg: this.defaultCommitMsg({ path }) })
   }
 
   onChange = (msgId, translation) =>
@@ -126,17 +144,26 @@ export class POEditor extends React.Component {
     })
 
   view() {
-    const { src, dst } = this.state
-    return Object.keys(src).map(k => (
-      <Row
-        isRTL={RTL_LANGS.includes(this.langCode())}
-        key={`msgId-${k}`}
-        text={k}
-        dstLng={this.langCode()}
-        translation={dst[k] || ''}
-        onChange={this.onChange}
-      />
-    ))
+    const { src, dst, show } = this.state
+    return Object.keys(src).map(k => {
+      if (
+        (show === SHOW_EMPTY && dst[k]) ||
+        (show === SHOW_FILLED && !dst[k])
+      ) {
+        return null
+      }
+
+      return (
+        <Row
+          isRTL={RTL_LANGS.includes(this.langCode(this.props))}
+          key={`msgId-${k}`}
+          text={k}
+          dstLng={this.langCode(this.props)}
+          translation={dst[k] || ''}
+          onChange={this.onChange}
+        />
+      )
+    })
   }
 
   async onSave() {
@@ -148,7 +175,7 @@ export class POEditor extends React.Component {
       }
     })
 
-    const lang = this.langCode()
+    const lang = this.langCode(this.props)
     const encodedPO = await i18nextToPo(lang, JSON.stringify(json))
     const contentsPO = new TextDecoder('utf-8').decode(encodedPO)
 
@@ -171,15 +198,31 @@ export class POEditor extends React.Component {
 
     this.setState({
       showSnackBar: true,
-      commitMsg: this.defaultCommitMsg(),
+      commitMsg: this.defaultCommitMsg(this.props),
     })
   }
 
   setCommitMsg = evt => this.setState({ commitMsg: evt.target.value })
 
+  showValues = [SHOW_ALL, SHOW_EMPTY, SHOW_FILLED]
+  onShowChange = evt =>
+    this.setState({
+      show: this.showValues[evt.target.selectedIndex],
+    })
+
   render() {
     return (
       <Container>
+        <Toolbar>
+          <ToolbarText>Show</ToolbarText>
+          <select onChange={this.onShowChange}>
+            {this.showValues.map(v => (
+              <option key={`option-${v}`} value={v}>
+                {v}
+              </option>
+            ))}
+          </select>
+        </Toolbar>
         {this.view()}
         <div className="w-100 pt-5 pb-4 d-flex flex-column align-items-center justify-content-center">
           <TextField
