@@ -14,6 +14,7 @@ import nlFlag from 'assets/images/flags/nl.png'
 import pkFlag from 'assets/images/flags/pk.png'
 import ptFlag from 'assets/images/flags/pt.png'
 import saFlag from 'assets/images/flags/sa.png'
+import seFlag from 'assets/images/flags/se.png'
 import usFlag from 'assets/images/flags/us.png'
 
 import { Topic } from './Projects'
@@ -53,6 +54,7 @@ const flagImgs = {
   no: nbFlag,
   pt: ptFlag,
   sa: saFlag,
+  se: seFlag,
   ur: pkFlag,
 }
 
