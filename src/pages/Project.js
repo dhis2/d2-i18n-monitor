@@ -54,7 +54,7 @@ const flagImgs = {
   no: nbFlag,
   pt: ptFlag,
   sa: saFlag,
-  se: seFlag,
+  sv: seFlag,
   ur: pkFlag,
 }
 

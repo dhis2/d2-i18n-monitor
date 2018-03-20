@@ -93,6 +93,11 @@ export class POEditor extends React.Component {
 
   componentWillReceiveProps(newProps) {
     this.load(newProps)
+    if (this.props.path !== newProps.path) {
+      this.setState({
+        dst: {},
+      })
+    }
   }
 
   defaultCommitMsg() {
@@ -105,8 +110,7 @@ export class POEditor extends React.Component {
     return code.substr(0, code.lastIndexOf('.'))
   }
 
-  async load() {
-    const { content, potContent } = this.props
+  async load({ content, potContent }) {
     const src = JSON.parse(await gettextToI18next('en', potContent))
     const dst = JSON.parse(await gettextToI18next(this.langCode(), content))
 
