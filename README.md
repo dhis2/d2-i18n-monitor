@@ -68,4 +68,7 @@ Once you are finished translating, hit **Save** at the bottom of the page.
 - We will create a branch inside the project repo. by the name **i18n/LANGUAGE-CODE-translations**.
 - We will push all updated language strings in **LANGUAGE-CODE.po** to the same path as on **master** branch.
 
-At this point you must create a **Pull Request** from **i18n/LANGUAGE-CODE-translations** against the **master** branch to merge updates.
+At this point you must create a **Pull Request** from **i18n/LANGUAGE-CODE-translations** against the **master** branch to merge updates. 
+
+*Note*
+When your **Pull Request** is merged with the master branch. Please delete **i18n/LANGUAGE-CODE-translations** branch.
