@@ -70,5 +70,7 @@ Once you are finished translating, hit **Save** at the bottom of the page.
 
 At this point you must create a **Pull Request** from **i18n/LANGUAGE-CODE-translations** against the **master** branch to merge updates. 
 
-*Note*
+
+**Note**
+
 When your **Pull Request** is merged with the master branch. Please delete **i18n/LANGUAGE-CODE-translations** branch.
