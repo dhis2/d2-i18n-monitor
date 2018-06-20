@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import API from 'api'
 import { Highlight, Stats, POEditor } from 'components'
 
 const TabsContainer = styled.div`
@@ -48,7 +49,7 @@ const Header = styled.div`
 `
 
 const EditMode = styled.div.attrs({
-  className: 'fa fa-pencil-square-o',
+  className: 'fa fa-pencil-square-o'
 })`
   cursor: pointer;
   margin-right: 15px;
@@ -61,18 +62,49 @@ const EditMode = styled.div.attrs({
 `
 
 export class Files extends React.Component {
-  contentView() {
-    const { selected, list, editMode } = this.props
-    const ext = selected.substr(selected.lastIndexOf('.') + 1)
-    const ext2Lang = {
-      yml: 'yaml',
-      json: 'json',
-      pot: 'lsl',
-      po: 'lsl',
+  state = {
+    content: null
+  }
+
+  async componentDidUpdate(prevProps) {
+    const { selected, editMode } = this.props
+    if (prevProps.editMode && selected === prevProps.selected) {
+      return
     }
-    const content = list[selected]
 
     if (editMode && selected.endsWith('.po')) {
+      const { owner, repo, list } = this.props
+
+      const file = selected.substr(selected.lastIndexOf('/') + 1)
+      const lang = file.substr(0, file.indexOf('.'))
+      const branch = `i18n/${lang}-translations`
+      console.log('branch', branch)
+
+      try {
+        const { found, content } = await API.contents(
+          owner,
+          repo,
+          selected,
+          branch
+        )
+        this.setState({
+          content: found ? content : list[selected]
+        })
+      } catch (e) {
+        console.log('componentDidUpdate', e)
+      }
+    }
+  }
+
+  contentView() {
+    const { list, selected, editMode } = this.props
+
+    if (editMode && selected.endsWith('.po')) {
+      const { content } = this.state
+      if (content === null) {
+        return null
+      }
+
       const { owner, repo } = this.props
       return (
         <POEditor
@@ -85,11 +117,14 @@ export class Files extends React.Component {
       )
     }
 
-    if (!content) {
-      return null
+    const ext = selected.substr(selected.lastIndexOf('.') + 1)
+    const ext2Lang = {
+      yml: 'yaml',
+      json: 'json',
+      pot: 'lsl',
+      po: 'lsl'
     }
-
-    return <Highlight lang={ext2Lang[ext]}>{content}</Highlight>
+    return <Highlight lang={ext2Lang[ext]}>{list[selected]}</Highlight>
   }
 
   render() {
@@ -97,7 +132,7 @@ export class Files extends React.Component {
     const sorted = Object.keys(list).sort((a, b) =>
       a
         .slice(a.lastIndexOf('.') + 1)
-        .localeCompare(b.slice(b.lastIndexOf('.') + 1)),
+        .localeCompare(b.slice(b.lastIndexOf('.') + 1))
     )
 
     const { editMode } = this.props

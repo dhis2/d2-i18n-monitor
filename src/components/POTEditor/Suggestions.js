@@ -48,8 +48,8 @@ export default class Suggestions extends React.Component {
 
   async fetch({ enabled, srcLng, dstLng, text }) {
     if (enabled) {
-      const list = await getSuggestion(srcLng, dstLng, text)
-      this.setState({ list: list.map(i => i.target) })
+      // const list = await getSuggestion(srcLng, dstLng, text)
+      // this.setState({ list: list.map(i => i.target) })
     }
   }
 
