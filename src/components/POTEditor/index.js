@@ -50,7 +50,7 @@ const Text = Column.extend`
 
 const commitMsgStyle = {
   marginBottom: 30,
-  width: '50%',
+  width: '50%'
 }
 
 const Row = ({ dstLng, text, translation, isRTL, onChange }) => (
@@ -82,7 +82,7 @@ const RTL_LANGS = [
   'ku',
   'ps',
   'ur',
-  'yi',
+  'yi'
 ]
 
 const SHOW_ALL = 'All'
@@ -95,7 +95,7 @@ export class POEditor extends React.Component {
     commitMsg: this.defaultCommitMsg(this.props),
     show: SHOW_ALL,
     src: {},
-    dst: {},
+    dst: {}
   }
 
   constructor(props) {
@@ -110,7 +110,7 @@ export class POEditor extends React.Component {
   componentWillReceiveProps(newProps) {
     if (this.props.path !== newProps.path) {
       this.setState({
-        dst: {},
+        dst: {}
       })
     }
 
@@ -129,7 +129,7 @@ export class POEditor extends React.Component {
   async load({ content, potContent, path }) {
     const src = JSON.parse(await gettextToI18next('en', potContent))
     const dst = JSON.parse(
-      await gettextToI18next(this.langCode({ path }), content),
+      await gettextToI18next(this.langCode({ path }), content)
     )
 
     this.setState({ src, dst, commitMsg: this.defaultCommitMsg({ path }) })
@@ -139,8 +139,8 @@ export class POEditor extends React.Component {
     this.setState({
       dst: {
         ...this.state.dst,
-        [msgId]: translation,
-      },
+        [msgId]: translation
+      }
     })
 
   view() {
@@ -177,7 +177,7 @@ export class POEditor extends React.Component {
 
     const lang = this.langCode(this.props)
     const encodedPO = await i18nextToPo(lang, JSON.stringify(json))
-    const contentsPO = new TextDecoder('utf-8').decode(encodedPO)
+    const contentsPO = new TextDecoder('utf-8').decode(encodedPO) + '\n'
 
     const { path, owner, repo } = this.props
     const branch = `i18n/${lang}-translations`
@@ -193,12 +193,12 @@ export class POEditor extends React.Component {
       path,
       branch,
       contentsPO,
-      commitMsg,
+      commitMsg
     )
 
     this.setState({
       showSnackBar: true,
-      commitMsg: this.defaultCommitMsg(this.props),
+      commitMsg: this.defaultCommitMsg(this.props)
     })
   }
 
@@ -207,7 +207,7 @@ export class POEditor extends React.Component {
   showValues = [SHOW_ALL, SHOW_EMPTY, SHOW_FILLED]
   onShowChange = evt =>
     this.setState({
-      show: this.showValues[evt.target.selectedIndex],
+      show: this.showValues[evt.target.selectedIndex]
     })
 
   render() {
