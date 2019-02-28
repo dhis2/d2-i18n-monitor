@@ -1,4 +1,7 @@
 ## Purpose
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/dhis2/d2-i18n-monitor.svg)](https://greenkeeper.io/)
+
 We use [d2-i18n-monitor](http://dhis2.github.io/d2-i18n-monitor/) to track progress of language support across our entire DHIS2 platform (only frontend for now).
 
 ### Configuration
